@@ -3,34 +3,6 @@
     "name": "Player Actions",
     "maps": [
         {
-            "name": "New action map",
-            "id": "60900029-d67c-4dea-8d77-a32547069552",
-            "actions": [
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "bc20e0bb-d4d5-4f0e-906a-2d2f818798e5",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "c7c485aa-1a7b-411e-be9c-8a835822ab2c",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
             "name": "Gameplay",
             "id": "e2ab8e74-6490-4c4e-a02f-82e238c8031c",
             "actions": [
@@ -51,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Secondary",
+                    "type": "Button",
+                    "id": "a1b708e1-3a1c-4df5-bf07-3b9acbcf36d6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -119,6 +100,17 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "2c8d2924-b527-4e17-9a97-a68669bdbaf0",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Secondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
