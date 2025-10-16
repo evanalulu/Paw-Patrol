@@ -17,9 +17,10 @@ public class CarSpawner : MonoBehaviour
 
     void SpawnCar()
     {
-        int carIndex = Random.Range(0, carPrefabs.Length);
-        float laneX = lanes[Random.Range(0, lanes.Length)];
-        float randomZ = Random.Range(2f, 10f);
+        // Spawn car of
+        int carIndex = Random.Range(0, carPrefabs.Length); // rand car type
+        float laneX = lanes[Random.Range(0, lanes.Length)]; // at rand x
+        float randomZ = Random.Range(2f, 10f); // at rand z
 
         Vector3 spawnPos = new Vector3(laneX, 0.16f, randomZ);
 

@@ -20,7 +20,9 @@ public class CarLooper : MonoBehaviour
 
         if (transform.position.z < despawnZ)
         {
+            // Pick lane to not reappear in same col
             float laneX = Random.Range(-0.9f, 0.9f);
+            // Move back to top of road
             transform.position = new Vector3(laneX, 0.16f, respawnZ);
         }
     }
