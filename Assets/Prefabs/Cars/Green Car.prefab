@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6470721045129870794}
   - component: {fileID: 8892539229384982623}
+  - component: {fileID: -8098423592351076575}
   m_Layer: 0
   m_Name: Green Car
   m_TagString: Untagged
@@ -90,3 +91,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-8098423592351076575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118434211489919042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c00a25d45a1f47bda3bbd47142170a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarLooper
+  speed: 2
+  despawnZ: -10
+  respawnZ: 12

@@ -2,16 +2,12 @@ using UnityEngine;
 
 public class CarLooper : MonoBehaviour
 {
-    private float speed;
-    private float despawnZ;
-    private float respawnZ;
+    [Header("Loop Settings")]
+    [SerializeField] private float speed = 2f;      // Car movement speed
+    [SerializeField] private float despawnZ = -10f; // When to disappear
+    [SerializeField] private float respawnZ = 12f;  // Where to reappear
 
-    public void Init(float carSpeed, float despawnLimit, float respawnPoint)
-    {
-        speed = carSpeed;
-        despawnZ = despawnLimit;
-        respawnZ = respawnPoint;
-    }
+    private readonly float[] lanes = { -0.9f, 0f, 0.9f };
 
     void Update()
     {
@@ -20,9 +16,7 @@ public class CarLooper : MonoBehaviour
 
         if (transform.position.z < despawnZ)
         {
-            // Pick lane to not reappear in same col
-            float laneX = Random.Range(-0.9f, 0.9f);
-            // Move back to top of road
+            float laneX = lanes[Random.Range(0, lanes.Length)];
             transform.position = new Vector3(laneX, 0.16f, respawnZ);
         }
     }

@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class CarSpawner : MonoBehaviour
 {
+    [Header("Car Prefabs")]
     public GameObject[] carPrefabs;
+
+    [Header("Spawn Settings")]
     public float spawnInterval = 2f;
-    public float carSpeed = 2f;
 
     private readonly float[] lanes = { -0.9f, 0f, 0.9f };
-    private float despawnZ = -10f;
-    private float respawnZ = 12f;
 
     void Start()
     {
@@ -17,20 +17,20 @@ public class CarSpawner : MonoBehaviour
 
     void SpawnCar()
     {
-        // Spawn car of
-        int carIndex = Random.Range(0, carPrefabs.Length); // rand car type
-        float laneX = lanes[Random.Range(0, lanes.Length)]; // at rand x
-        float randomZ = Random.Range(2f, 10f); // at rand z
+        if (carPrefabs.Length == 0)
+        {
+            Debug.LogWarning("No car prefabs assigned to CarSpawner!");
+            return;
+        }
+
+        // Choose a random prefab and lane
+        int carIndex = Random.Range(0, carPrefabs.Length);
+        float laneX = lanes[Random.Range(0, lanes.Length)];
+        float randomZ = Random.Range(2f, 10f);
 
         Vector3 spawnPos = new Vector3(laneX, 0.16f, randomZ);
+        Quaternion spawnRot = Quaternion.Euler(90f, 180f, 0f);
 
-        GameObject car = Instantiate(
-            carPrefabs[carIndex],
-            spawnPos,
-            Quaternion.Euler(90f, 180f, 0f)
-        );
-
-        var looper = car.AddComponent<CarLooper>();
-        looper.Init(carSpeed, despawnZ, respawnZ);
+        Instantiate(carPrefabs[carIndex], spawnPos, spawnRot);
     }
 }
