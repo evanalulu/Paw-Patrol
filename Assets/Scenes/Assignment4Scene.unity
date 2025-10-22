@@ -522,9 +522,11 @@ GameObject:
   - component: {fileID: 812423778}
   - component: {fileID: 812423781}
   - component: {fileID: 812423780}
+  - component: {fileID: 812423783}
+  - component: {fileID: 812423782}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -625,6 +627,8 @@ MonoBehaviour:
   ballPrefab: {fileID: 206380212827585869, guid: 3a6b5f94d4f804f42b90508c7cbcb6c9, type: 3}
   throwSpeed: 8
   spawnOffsetZ: 1
+  hitPoints: 3
+  hitEffect: {fileID: 1967835574231978638, guid: 3e196c9e632c76841a71cb6e2dc6d010, type: 3}
 --- !u!114 &812423781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -667,6 +671,54 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!54 &812423782
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812423777}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &812423783
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812423777}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.17, y: 0.5, z: 0.17}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -726,6 +778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1872868494}
   - component: {fileID: 1872868493}
+  - component: {fileID: 1872868495}
   m_Layer: 0
   m_Name: CarSpawner
   m_TagString: Untagged
@@ -750,8 +803,13 @@ MonoBehaviour:
   - {fileID: 7118434211489919042, guid: 2fe05f85b69754ccc86e6d2335d34748, type: 3}
   - {fileID: 5947773728299764360, guid: b807490057b8241e8a86f66810999d89, type: 3}
   - {fileID: 5443197753775594386, guid: a9c6654a8fe49458b8f6aea2c05226ad, type: 3}
+  rescuePrefabs:
+  - {fileID: 1023245943045432048, guid: 2d4873cf305f64b6186e84cd529e3886, type: 3}
+  - {fileID: 1268560118859845471, guid: 551b5131c4ea64190992e8bc5a616543, type: 3}
+  - {fileID: 1069179681805747669, guid: e911ae811767945ebbb155bcbcee8cd0, type: 3}
+  - {fileID: 8289205364167706014, guid: 60e93efc59d0347dab1a3c7f65342784, type: 3}
   spawnInterval: 2
-  carSpeed: 3
+  rescueChance: 0.2
 --- !u!4 &1872868494
 Transform:
   m_ObjectHideFlags: 0
@@ -767,6 +825,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1872868495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872868492}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c00a25d45a1f47bda3bbd47142170a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CarLooper
+  speed: 0
+  despawnZ: 0
+  respawnZ: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

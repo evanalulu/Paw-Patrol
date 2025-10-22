@@ -20,32 +20,30 @@ public class PlayerController : MonoBehaviour
     public float throwSpeed = 1f;
     public float spawnOffsetZ = 1f;
 
+    [Header("Player Health")]
+    public int hitPoints = 3; // start with 3 lives
+
+    [Header("FX Settings")]
+    public GameObject hitEffect; // drag FX001_01.prefab here in Inspector
+
     private Vector2 moveInput;
 
     void OnEnable()
     {
-        // Enable input actions
         Primary.action.Enable();
-        Secondary.action.Enable();
         Move.action.Enable();
 
-        // Sub to input events
-        Primary.action.started += OnPrimary;     // Space -> Bone
-        Secondary.action.started += OnSecondary; // Ctrl -> Ball
+        Primary.action.started += OnPrimary;
         Move.action.performed += OnMove;
         Move.action.canceled += OnMove;
     }
 
     void OnDisable()
     {
-        // Disable input actions
         Primary.action.Disable();
-        Secondary.action.Disable();
         Move.action.Disable();
 
-        // Unsub to avoid leaks
         Primary.action.started -= OnPrimary;
-        Secondary.action.started -= OnSecondary;
         Move.action.performed -= OnMove;
         Move.action.canceled -= OnMove;
     }
@@ -62,19 +60,14 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        // Move player smoothly
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y) * maneuveringSpeed * Time.deltaTime;
         transform.position += move;
 
-        // Lane boundaries
-        float leftLimit = -0.9f;  // left lane edge
-        float rightLimit = 0.9f;  // right lane edge
-
-        // Lower 2/3 box bounds
+        float leftLimit = -0.9f;
+        float rightLimit = 0.9f;
         float bottomLimit = -6f;
         float topLimit = -3f;
 
-        // Clamp position
         Vector3 pos = transform.position;
         pos.x = Mathf.Clamp(pos.x, leftLimit, rightLimit);
         pos.z = Mathf.Clamp(pos.z, bottomLimit, topLimit);
@@ -83,32 +76,43 @@ public class PlayerController : MonoBehaviour
 
     void OnPrimary(InputAction.CallbackContext context)
     {
-        Debug.Log("Space pressed → throw Bone");
-        ThrowProjectile(bonePrefab);
-    }
+        Debug.Log("Space pressed");
+        GameObject prefabToThrow = Random.value > 0.5f ? bonePrefab : ballPrefab;
+        if (prefabToThrow == null) return;
 
-    void OnSecondary(InputAction.CallbackContext context)
-    {
-        Debug.Log("Ctrl pressed → throw Ball");
-        ThrowProjectile(ballPrefab);
-    }
-
-    void ThrowProjectile(GameObject prefabToThrow)
-    {
-        if (prefabToThrow == null)
-        {
-            Debug.LogWarning("⚠ No prefab assigned!");
-            return;
-        }
-
-        // Spawn just above the player
         Vector3 spawnPos = transform.position + new Vector3(0f, 0.16f, spawnOffsetZ);
-
         Quaternion spawnRot = Quaternion.Euler(90f, 0f, 0f);
+
         GameObject projectile = Instantiate(prefabToThrow, spawnPos, spawnRot);
         projectile.AddComponent<TreatMover>().Init(throwSpeed);
+    }
 
-        Debug.Log($"Spawned {projectile.name} at {spawnPos}");
+    // Collision detection — lose a life if hit by a car
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Enemy"))
+        {
+            hitPoints--;
+            Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
+
+            // Spawn FX
+            if (hitEffect != null)
+            {
+                Quaternion fxRotation = Quaternion.Euler(90f, 0f, 0f);
+                GameObject fx = Instantiate(hitEffect, transform.position + new Vector3(0f, 0.1f, 0f), fxRotation);
+                Destroy(fx, 0.417f);
+            }
+
+            // Stop the game if out of lives
+            if (hitPoints <= 0)
+            {
+                Debug.Log("🚨 Game Over! Out of lives.");
+                Time.timeScale = 0.0f;
+            }
+
+            // Destroy the car that player hit
+            Destroy(collision.gameObject);
+        }
     }
 }
 
@@ -126,7 +130,7 @@ public class TreatMover : MonoBehaviour
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
 
-        // Ddestroy when off screen
+        // Destroy when off screen
         if (transform.position.z > 12f)
         {
             Destroy(gameObject);
