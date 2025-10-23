@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 824539970696858020}
   - component: {fileID: 4362823195939969962}
   - component: {fileID: 6517586991157304917}
+  - component: {fileID: -3723008953603510181}
   m_Layer: 0
   m_Name: Teal Truck (Dog)
-  m_TagString: Untagged
+  m_TagString: Rescue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1069179681805747669}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0.731, y: 0, z: 0}
+  m_LocalPosition: {x: 0.731, y: 0.16, z: 0}
   m_LocalScale: {x: 0.155, y: 0.155, z: 0.155}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -127,7 +128,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.220001, y: 7.350002, z: 0.2000018}
+  m_Size: {x: 4.220001, y: 7.350002, z: 1.17}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &6517586991157304917
 Rigidbody:
@@ -152,7 +153,20 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-3723008953603510181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1069179681805747669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f79f0cf5565244929b4c6b0f9bbb76a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RescueTarget
+  rescueEffect: {fileID: 1967835574231978638, guid: 3e196c9e632c76841a71cb6e2dc6d010, type: 3}

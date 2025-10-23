@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Input Actions")]
-    public InputActionReference Primary;
-    public InputActionReference Secondary;
+    public InputActionReference Primary;   // now BALL
+    public InputActionReference Secondary; // now BONE
     public InputActionReference Move;
 
     [Header("Movement Settings")]
@@ -19,21 +19,26 @@ public class PlayerController : MonoBehaviour
     public GameObject ballPrefab;
     public float throwSpeed = 1f;
     public float spawnOffsetZ = 1f;
+    public float fireCooldown = 0.25f;
 
     [Header("Player Health")]
-    public int hitPoints = 3; // start with 3 lives
+    public int hitPoints = 3;
 
     [Header("FX Settings")]
-    public GameObject hitEffect; // drag FX001_01.prefab here in Inspector
+    public GameObject hitEffect; // drag FX001_01.prefab here
 
     private Vector2 moveInput;
+    private float lastFireTimePrimary = 0f;
+    private float lastFireTimeSecondary = 0f;
 
     void OnEnable()
     {
         Primary.action.Enable();
+        Secondary.action.Enable();
         Move.action.Enable();
 
-        Primary.action.started += OnPrimary;
+        Primary.action.started += OnPrimary;     // Space → Ball
+        Secondary.action.started += OnSecondary; // Ctrl → Bone
         Move.action.performed += OnMove;
         Move.action.canceled += OnMove;
     }
@@ -41,17 +46,16 @@ public class PlayerController : MonoBehaviour
     void OnDisable()
     {
         Primary.action.Disable();
+        Secondary.action.Disable();
         Move.action.Disable();
 
         Primary.action.started -= OnPrimary;
+        Secondary.action.started -= OnSecondary;
         Move.action.performed -= OnMove;
         Move.action.canceled -= OnMove;
     }
 
-    void Update()
-    {
-        MovePlayer();
-    }
+    void Update() => MovePlayer();
 
     void OnMove(InputAction.CallbackContext context)
     {
@@ -74,17 +78,31 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
+    // 🎾 SPACE → Ball
     void OnPrimary(InputAction.CallbackContext context)
     {
-        Debug.Log("Space pressed");
-        GameObject prefabToThrow = Random.value > 0.5f ? bonePrefab : ballPrefab;
-        if (prefabToThrow == null) return;
+        if (Time.time - lastFireTimePrimary < fireCooldown) return;
+        lastFireTimePrimary = Time.time;
+        ThrowProjectile(ballPrefab, "Ball");
+    }
+
+    // 🦴 CTRL → Bone
+    void OnSecondary(InputAction.CallbackContext context)
+    {
+        if (Time.time - lastFireTimeSecondary < fireCooldown) return;
+        lastFireTimeSecondary = Time.time;
+        ThrowProjectile(bonePrefab, "Bone");
+    }
+
+    void ThrowProjectile(GameObject prefab, string type)
+    {
+        if (prefab == null) return;
 
         Vector3 spawnPos = transform.position + new Vector3(0f, 0.16f, spawnOffsetZ);
         Quaternion spawnRot = Quaternion.Euler(90f, 0f, 0f);
 
-        GameObject projectile = Instantiate(prefabToThrow, spawnPos, spawnRot);
-        projectile.AddComponent<TreatMover>().Init(throwSpeed);
+        GameObject projectile = Instantiate(prefab, spawnPos, spawnRot);
+        projectile.AddComponent<TreatMover>().Init(throwSpeed, type);
     }
 
     // Collision detection — lose a life if hit by a car
@@ -95,23 +113,18 @@ public class PlayerController : MonoBehaviour
             hitPoints--;
             Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
 
-            // Spawn FX
             if (hitEffect != null)
             {
-                Quaternion fxRotation = Quaternion.Euler(90f, 0f, 0f);
+                Quaternion fxRotation = Quaternion.Euler(90f, 180f, 0f);
                 GameObject fx = Instantiate(hitEffect, transform.position + new Vector3(0f, 0.1f, 0f), fxRotation);
                 Destroy(fx, 0.417f);
             }
 
-            // Stop the game if out of lives
             if (hitPoints <= 0)
             {
                 Debug.Log("🚨 Game Over! Out of lives.");
                 Time.timeScale = 0.0f;
             }
-
-            // Destroy the car that player hit
-            Destroy(collision.gameObject);
         }
     }
 }
@@ -120,19 +133,30 @@ public class PlayerController : MonoBehaviour
 public class TreatMover : MonoBehaviour
 {
     private float speed;
+    private string type; // Ball or Bone
 
-    public void Init(float moveSpeed)
+    public void Init(float moveSpeed, string projectileType)
     {
         speed = moveSpeed;
+        type = projectileType;
     }
 
     void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime, Space.World);
 
-        // Destroy when off screen
         if (transform.position.z > 12f)
+            Destroy(gameObject);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log($"Bullet hit: {collision.collider.name}");
+        if (collision.collider.CompareTag("Rescue"))
         {
+            RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
+            Debug.Log("Rescue target hit!");
+            rescue.TakeHit(type);
             Destroy(gameObject);
         }
     }

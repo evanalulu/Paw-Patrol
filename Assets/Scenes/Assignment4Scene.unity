@@ -627,6 +627,7 @@ MonoBehaviour:
   ballPrefab: {fileID: 206380212827585869, guid: 3a6b5f94d4f804f42b90508c7cbcb6c9, type: 3}
   throwSpeed: 8
   spawnOffsetZ: 1
+  fireCooldown: 0.25
   hitPoints: 3
   hitEffect: {fileID: 1967835574231978638, guid: 3e196c9e632c76841a71cb6e2dc6d010, type: 3}
 --- !u!114 &812423781
