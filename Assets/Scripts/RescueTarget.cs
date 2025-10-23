@@ -14,8 +14,8 @@ public class RescueTarget : MonoBehaviour
             Debug.Log("🐾 Pet rescued!");
             if (rescueEffect != null)
             {
-                Quaternion fxRotation = Quaternion.Euler(90f, 180f, 0f);
-                GameObject fx = Instantiate(rescueEffect, transform.position + new Vector3(0f, 0.1f, 0f), fxRotation);
+                GameObject fx = Instantiate(rescueEffect, transform.position + new Vector3(0f, 0.3f, 0f), Quaternion.identity);
+                fx.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 Destroy(fx, 0.417f);
             }
 

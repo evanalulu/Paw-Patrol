@@ -169,4 +169,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f79f0cf5565244929b4c6b0f9bbb76a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RescueTarget
-  rescueEffect: {fileID: 1967835574231978638, guid: 3e196c9e632c76841a71cb6e2dc6d010, type: 3}
+  rescueEffect: {fileID: 7343611469452644108, guid: 110207c6e66554989a6bf8a1078975b1, type: 3}
