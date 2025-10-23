@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Input Actions")]
-    public InputActionReference Primary;   // now BALL
-    public InputActionReference Secondary; // now BONE
+    public InputActionReference Primary;   // Ball
+    public InputActionReference Secondary; // Bone
     public InputActionReference Move;
 
     [Header("Movement Settings")]
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public int hitPoints = 3;
 
     [Header("FX Settings")]
-    public GameObject hitEffect; // drag FX001_01.prefab here
+    public GameObject hitEffect;
 
     private Vector2 moveInput;
     private float lastFireTimePrimary = 0f;
@@ -157,7 +157,8 @@ public class TreatMover : MonoBehaviour
             RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
             Debug.Log("Rescue target hit!");
             rescue.TakeHit(type);
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
 }
