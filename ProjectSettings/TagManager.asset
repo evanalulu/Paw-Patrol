@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Rescue
+  - Bullets
   layers:
   - Default
   - TransparentFX

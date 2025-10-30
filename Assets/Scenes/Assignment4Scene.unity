@@ -811,6 +811,9 @@ MonoBehaviour:
   - {fileID: 8289205364167706014, guid: 60e93efc59d0347dab1a3c7f65342784, type: 3}
   spawnInterval: 2
   rescueChance: 0.2
+  laneCooldown: 3
+  carSpawnZMin: 12
+  carSpawnZMax: 15
 --- !u!4 &1872868494
 Transform:
   m_ObjectHideFlags: 0
