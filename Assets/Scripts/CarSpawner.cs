@@ -8,7 +8,7 @@ public class CarSpawner : MonoBehaviour
 
     [Header("Spawn Settings")]
     public float spawnInterval = 2f;
-    public float rescueChance = 0.5f;
+    public float rescueChance = 0.9f;
     public float laneCooldown = 3f;
     public float carSpawnZMin = 12f;
     public float carSpawnZMax = 15f;

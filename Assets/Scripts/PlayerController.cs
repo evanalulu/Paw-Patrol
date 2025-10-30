@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float lastFireTimePrimary = 0f;
     private float lastFireTimeSecondary = 0f;
+    private AudioManager audioManager;
+
+    void Start()
+    {
+        audioManager = FindObjectOfType<AudioManager>(); // cache once
+    }
 
     void OnEnable()
     {
@@ -78,20 +84,24 @@ public class PlayerController : MonoBehaviour
         transform.position = pos;
     }
 
-    // 🎾 SPACE → Ball
+    // SPACE → Ball
     void OnPrimary(InputAction.CallbackContext context)
     {
         if (Time.time - lastFireTimePrimary < fireCooldown) return;
         lastFireTimePrimary = Time.time;
         ThrowProjectile(ballPrefab, "Ball");
+
+        audioManager?.Play(audioManager.AttackSound);
     }
 
-    // 🦴 CTRL → Bone
+    // CTRL → Bone
     void OnSecondary(InputAction.CallbackContext context)
     {
         if (Time.time - lastFireTimeSecondary < fireCooldown) return;
         lastFireTimeSecondary = Time.time;
         ThrowProjectile(bonePrefab, "Bone");
+
+        audioManager?.Play(audioManager.AttackSound);
     }
 
     void ThrowProjectile(GameObject prefab, string type)
@@ -102,7 +112,7 @@ public class PlayerController : MonoBehaviour
         Quaternion spawnRot = Quaternion.Euler(90f, 0f, 0f);
 
         GameObject projectile = Instantiate(prefab, spawnPos, spawnRot);
-        projectile.AddComponent<TreatMover>().Init(throwSpeed, type);
+        projectile.AddComponent<TreatMover>().Init(throwSpeed, type, audioManager);
     }
 
     // Collision detection — lose a life if hit by a car
@@ -112,6 +122,8 @@ public class PlayerController : MonoBehaviour
         {
             hitPoints--;
             Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
+
+            audioManager?.Play(audioManager.CollisionSound);
 
             if (hitEffect != null)
             {
@@ -124,6 +136,9 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("🚨 Game Over! Out of lives.");
                 Time.timeScale = 0.0f;
+
+                audioManager?.Play(audioManager.GameOverSound);
+                audioManager.Music.Stop();
             }
         }
     }
@@ -134,11 +149,13 @@ public class TreatMover : MonoBehaviour
 {
     private float speed;
     private string type; // Ball or Bone
+		private AudioManager audioManager;
 
-    public void Init(float moveSpeed, string projectileType)
+    public void Init(float moveSpeed, string projectileType, AudioManager manager)
     {
         speed = moveSpeed;
         type = projectileType;
+				audioManager = manager;
     }
 
     void Update()
@@ -157,6 +174,9 @@ public class TreatMover : MonoBehaviour
             RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
             Debug.Log("Rescue target hit!");
             rescue.TakeHit(type);
+
+            audioManager?.Play(audioManager.PetCollectSound);
+            audioManager?.PlayRandomPetSound();
         }
 
         Destroy(gameObject);

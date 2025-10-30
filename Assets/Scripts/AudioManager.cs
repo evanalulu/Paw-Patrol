@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip PetCollectSound;
     public AudioClip WoofSound;
     public AudioClip MeowSound;
+		public AudioClip GameOverSound;
 
     void Awake()
     {
