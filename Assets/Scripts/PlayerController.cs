@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     [Header("FX Settings")]
     public GameObject hitEffect;
 
+		// [Header("UI Settings")]
+		private GameUIController gameUI;
+
     private Vector2 moveInput;
     private float lastFireTimePrimary = 0f;
     private float lastFireTimeSecondary = 0f;
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         audioManager = FindObjectOfType<AudioManager>(); // cache once
+        gameUI = FindObjectOfType<GameUIController>();
     }
 
     void OnEnable()
@@ -112,7 +116,7 @@ public class PlayerController : MonoBehaviour
         Quaternion spawnRot = Quaternion.Euler(90f, 0f, 0f);
 
         GameObject projectile = Instantiate(prefab, spawnPos, spawnRot);
-        projectile.AddComponent<TreatMover>().Init(throwSpeed, type, audioManager);
+        projectile.AddComponent<TreatMover>().Init(throwSpeed, type, audioManager, gameUI);
     }
 
     // Collision detection — lose a life if hit by a car
@@ -121,6 +125,7 @@ public class PlayerController : MonoBehaviour
         if (collision.collider.CompareTag("Enemy"))
         {
             hitPoints--;
+            gameUI?.SetHealth(hitPoints * 33); // convert 3 hits → 100/66/33/0
             Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
 
             audioManager?.Play(audioManager.CollisionSound);
@@ -134,6 +139,7 @@ public class PlayerController : MonoBehaviour
 
             if (hitPoints <= 0)
             {
+                gameUI?.LoseLife();
                 Debug.Log("🚨 Game Over! Out of lives.");
                 Time.timeScale = 0.0f;
 
@@ -150,12 +156,14 @@ public class TreatMover : MonoBehaviour
     private float speed;
     private string type; // Ball or Bone
 		private AudioManager audioManager;
+		private GameUIController gameUI;
 
-    public void Init(float moveSpeed, string projectileType, AudioManager manager)
+    public void Init(float moveSpeed, string projectileType, AudioManager manager, GameUIController ui)
     {
         speed = moveSpeed;
         type = projectileType;
-				audioManager = manager;
+        audioManager = manager;
+        gameUI = ui;
     }
 
     void Update()
@@ -171,6 +179,7 @@ public class TreatMover : MonoBehaviour
         Debug.Log($"Bullet hit: {collision.collider.name}");
         if (collision.collider.CompareTag("Rescue"))
         {
+            gameUI?.AddScore(10);
             RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
             Debug.Log("Rescue target hit!");
             rescue.TakeHit(type);

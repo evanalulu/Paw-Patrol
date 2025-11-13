@@ -1,0 +1,44 @@
+/* Root container setup */
+#root {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+/* Top-right container for score + health */
+.top-right {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* Score */
+.score-label {
+    color: white;
+    font-size: 32px;
+    unity-font-style: bold;
+    margin-bottom: 5px;
+}
+
+/* Health */
+.health-label {
+    color: white;
+    font-size: 24px;
+    unity-font-style: bold;
+}
+
+.lives-container {
+    flex-direction: row;
+    margin-top: 8px;
+}
+
+.life-icon {
+    width: 24px;
+    height: 24px;
+    /*background-image: url("heart.png"); TODO */
+    background-size: cover;
+    margin-left: 4px;
+}
