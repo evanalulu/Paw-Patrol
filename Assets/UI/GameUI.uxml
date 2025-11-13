@@ -4,7 +4,7 @@
         <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1;">
             <ui:Label text="Score: 0" name="Score" class="score-label" />
             <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left;" />
-            <ui:VisualElement name="LivesContainer" class="lives-container" style="flex-grow: 1;" />
+            <ui:VisualElement name="HeartsBar" class="HeartsBar" style="flex-grow: 1;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

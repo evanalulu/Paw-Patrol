@@ -3,10 +3,17 @@ using UnityEngine.UIElements;
 
 public class GameUIController : MonoBehaviour
 {
+    // Images
+    public Sprite hearts3;
+    public Sprite hearts2;
+    public Sprite hearts1;
+    public Sprite hearts0;
+
     // UI references
     private Label scoreLabel;
     private Label healthLabel;
     private VisualElement livesContainer;
+    private VisualElement heartsBar;
 
     // Game stats
     private int score = 0;
@@ -23,8 +30,10 @@ public class GameUIController : MonoBehaviour
         scoreLabel = root.Q<Label>("Score");
         healthLabel = root.Q<Label>("Health");
         livesContainer = root.Q<VisualElement>("LivesContainer");
+        heartsBar = root.Q<VisualElement>("HeartsBar");
 
         UpdateUI();
+        SetLives(lives);
     }
 
     public void AddScore(int amount)
@@ -42,14 +51,14 @@ public class GameUIController : MonoBehaviour
     public void LoseLife()
     {
         lives = Mathf.Max(0, lives - 1);
-        UpdateLives();
+        SetLives(lives);
     }
 
     private void UpdateUI()
     {
         UpdateScore();
         UpdateHealth();
-        UpdateLives();
+        SetLives(lives);
     }
 
     private void UpdateScore()
@@ -64,18 +73,22 @@ public class GameUIController : MonoBehaviour
             healthLabel.text = $"Health: {health}";
     }
 
-    private void UpdateLives()
+    public void SetLives(int lives)
     {
-        if (livesContainer != null)
+        switch (lives)
         {
-            livesContainer.Clear();
-
-            for (int i = 0; i < lives; i++)
-            {
-                VisualElement lifeIcon = new VisualElement();
-                lifeIcon.AddToClassList("life-icon");
-                livesContainer.Add(lifeIcon);
-            }
+            case 3:
+                heartsBar.style.backgroundImage = new StyleBackground(hearts3);
+                break;
+            case 2:
+                heartsBar.style.backgroundImage = new StyleBackground(hearts2);
+                break;
+            case 1:
+                heartsBar.style.backgroundImage = new StyleBackground(hearts1);
+                break;
+            default:
+                heartsBar.style.backgroundImage = new StyleBackground(hearts0);
+                break;
         }
     }
 }
