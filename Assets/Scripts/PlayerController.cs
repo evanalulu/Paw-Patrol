@@ -21,14 +21,11 @@ public class PlayerController : MonoBehaviour
     public float spawnOffsetZ = 1f;
     public float fireCooldown = 0.25f;
 
-    [Header("Player Health")]
-    public int hitPoints = 3;
-
     [Header("FX Settings")]
     public GameObject hitEffect;
 
-		// [Header("UI Settings")]
-		private GameUIController gameUI;
+    // [Header("UI Settings")]
+    private GameUIController gameUI;
 
     private Vector2 moveInput;
     private float lastFireTimePrimary = 0f;
@@ -122,31 +119,36 @@ public class PlayerController : MonoBehaviour
     // Collision detection — lose a life if hit by a car
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag("Enemy"))
+        if (!collision.collider.CompareTag("Enemy")) return;
+
+        int newHealth = gameUI.Health - 34;
+        gameUI.SetHealth(newHealth);
+
+        audioManager?.Play(audioManager.CollisionSound);
+
+        if (hitEffect != null)
         {
-            hitPoints--;
-            gameUI?.SetHealth(hitPoints * 33); // convert 3 hits → 100/66/33/0
-            gameUI?.LoseLife();
-            Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
+            Quaternion fxRotation = Quaternion.Euler(90f, 180f, 0f);
+            GameObject fx = Instantiate(hitEffect, transform.position + new Vector3(0f, 0.1f, 0f), fxRotation);
+            Destroy(fx, 0.417f);
+        }
 
-            audioManager?.Play(audioManager.CollisionSound);
+        
+        // Check if health depleted
+        if (gameUI.Health <= 0)
+        {
+            gameUI.LoseLife();
+            gameUI.SetHealth(100); // Reset for next life
+            Debug.Log($"❤️ Lost a Life! Lives left: {gameUI.Lives}");
+        }
 
-            if (hitEffect != null)
-            {
-                Quaternion fxRotation = Quaternion.Euler(90f, 180f, 0f);
-                GameObject fx = Instantiate(hitEffect, transform.position + new Vector3(0f, 0.1f, 0f), fxRotation);
-                Destroy(fx, 0.417f);
-            }
-
-            if (hitPoints <= 0)
-            {
-                gameUI?.LoseLife();
-                Debug.Log("🚨 Game Over! Out of lives.");
-                Time.timeScale = 0.0f;
-
-                audioManager?.Play(audioManager.GameOverSound);
-                audioManager.Music.Stop();
-            }
+        // Game over
+        if (gameUI.Lives <= 0)
+        {
+            Debug.Log("🚨 GAME OVER!");
+            Time.timeScale = 0f;
+            audioManager?.Play(audioManager.GameOverSound);
+            audioManager.Music.Stop();
         }
     }
 }
@@ -156,8 +158,8 @@ public class TreatMover : MonoBehaviour
 {
     private float speed;
     private string type; // Ball or Bone
-		private AudioManager audioManager;
-		private GameUIController gameUI;
+    private AudioManager audioManager;
+    private GameUIController gameUI;
 
     public void Init(float moveSpeed, string projectileType, AudioManager manager, GameUIController ui)
     {

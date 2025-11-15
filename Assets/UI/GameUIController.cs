@@ -19,6 +19,9 @@ public class GameUIController : MonoBehaviour
     private int health = 100;
     private int lives = 3;
 
+    public int Lives => lives;
+    public int Health => health;
+
     void OnEnable()
     {
         // Get root visual element
@@ -35,7 +38,7 @@ public class GameUIController : MonoBehaviour
 
         Debug.Log($"Heart image loaded? {hearts3 != null}");
         Debug.Log($"Texture size: {hearts3.texture.width}x{hearts3.texture.height}");
-        
+
         UpdateUI();
         SetLives(lives);
     }
