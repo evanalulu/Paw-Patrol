@@ -1,19 +1,44 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "LevelConfig", menuName = "Game/Level Config")]
-public class LevelConfig : ScriptableObject
+public class GameLevelManager : MonoBehaviour
 {
-    public string levelName;
-    public GameObject backgroundPrefab;
+    public Material neighborhoodMaterial;
+    public Material downtownMaterial;
 
-    [Header("Enemy Spawn Settings")]
-    public float spawnInterval = 2f;
-    public GameObject[] vehiclePrefabs;
+    private Renderer backgroundRenderer;
+    private TextureScroller scroller;
 
-    [Header("Difficulty Scaling")]
-    public float minSpeed = 2f;
-    public float maxSpeed = 5f;
+    void Start()
+    {
+        backgroundRenderer = GameObject.Find("Background")?.GetComponent<Renderer>();
+        scroller = GameObject.Find("Background")?.GetComponent<TextureScroller>();
 
-    [Header("Rewards")]
-    public int scorePerPet = 10;
+        string selectedLevel = PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel");
+				Debug.Log($"{selectedLevel}");
+        ApplyLevelSettings(selectedLevel);
+    }
+
+    public void ApplyLevelSettings(string level)
+    {
+        Debug.Log("Applying Level Settings: " + level);
+
+        Material chosenMat = null;
+
+        if (level == "NeighborhoodLevel")
+            chosenMat = neighborhoodMaterial;
+        else if (level == "DowntownLevel")
+            chosenMat = downtownMaterial;
+        else
+            Debug.LogWarning("⚠️ Unknown level name: " + level);
+
+        if (chosenMat != null)
+        {
+            // Assign a NEW instance of the material so scrolling stays independent
+            Material instance = new Material(chosenMat);
+            backgroundRenderer.material = instance;
+
+            if (scroller != null)
+                scroller.GetComponent<Renderer>().material = instance;
+        }
+    }
 }

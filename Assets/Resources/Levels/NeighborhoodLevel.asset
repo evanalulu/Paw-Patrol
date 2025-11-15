@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31375d9bd27cf4ad5873a085975cf39d, type: 3}
   m_Name: NeighborhoodLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  levelName: 
-  backgroundPrefab: {fileID: 0}
-  spawnInterval: 2
-  vehiclePrefabs: []
-  minSpeed: 2
-  maxSpeed: 5
-  scorePerPet: 10
+  neighborhoodBackground: {fileID: 0}
+  downtownBackground: {fileID: 0}
+  neighborhoodSpawnRate: 2
+  downtownSpawnRate: 1.2

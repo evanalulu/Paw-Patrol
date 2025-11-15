@@ -19,15 +19,16 @@ public class LevelSelectManager : MonoBehaviour
 
         // Hook up events
         if (neighborhoodButton != null)
-            neighborhoodButton.clicked += () => LoadLevel("NeighborhoodStreet");
+            neighborhoodButton.clicked += () => SelectLevel("NeighborhoodLevel");
 
         if (downtownButton != null)
-            downtownButton.clicked += () => LoadLevel("NeighborhoodStreet");
+            downtownButton.clicked += () => SelectLevel("DowntownLevel");
     }
 
-    private void LoadLevel(string sceneName)
+    public void SelectLevel(string configName)
     {
-        Debug.Log("Loading: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        PlayerPrefs.SetString("SelectedLevel", configName);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("NeighborhoodStreet");
     }
 }
