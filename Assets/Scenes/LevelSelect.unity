@@ -528,7 +528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 735fa33529ff1455f95647a34122c799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AspectRatioEnforcer
-  targetAspect: 0.75
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

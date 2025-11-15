@@ -9,6 +9,10 @@ public class GameUIController : MonoBehaviour
     public Sprite hearts2;
     public Sprite hearts1;
     public Sprite hearts0;
+    
+    // Game over bgs
+    public Sprite neighborhoodGameOverBG;
+    public Sprite downtownGameOverBG;
 
     // UI references
     private Label scoreLabel;
@@ -121,6 +125,15 @@ public class GameUIController : MonoBehaviour
 
         gameOverScreen.style.display = DisplayStyle.Flex;
         finalScoreLabel.text = $"Score: {score}";
+
+        string selectedLevel = PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel");
+        if (gameOverScreen != null)
+        {
+            if (selectedLevel == "DowntownLevel" && downtownGameOverBG != null)
+                gameOverScreen.style.backgroundImage = new StyleBackground(downtownGameOverBG);
+            else if (neighborhoodGameOverBG != null)
+                gameOverScreen.style.backgroundImage = new StyleBackground(neighborhoodGameOverBG);
+        }
     }
 
     private void RestartGame()

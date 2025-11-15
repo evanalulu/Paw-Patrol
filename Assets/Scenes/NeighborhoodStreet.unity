@@ -1080,6 +1080,8 @@ MonoBehaviour:
   hearts2: {fileID: 21300000, guid: 1b2ae62471ce34e948403935e9309374, type: 3}
   hearts1: {fileID: 21300000, guid: 539b8836ada1a4e68b6085be88acdde8, type: 3}
   hearts0: {fileID: 21300000, guid: a74b35e45864b49f9a82735a3fffacb5, type: 3}
+  neighborhoodGameOverBG: {fileID: 21300000, guid: dbca8634ef70145c6b847d7ffa43f20e, type: 3}
+  downtownGameOverBG: {fileID: 21300000, guid: 2ca41c1eb5cc04ecc823884d1381aa5a, type: 3}
 --- !u!114 &753474747
 MonoBehaviour:
   m_ObjectHideFlags: 0
