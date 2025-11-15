@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class GameUIController : MonoBehaviour
 {
@@ -13,6 +14,11 @@ public class GameUIController : MonoBehaviour
     private Label scoreLabel;
     private Label healthLabel;
     private VisualElement heartsBar;
+
+    private VisualElement gameOverScreen;
+    private Label finalScoreLabel;
+    private Button playAgainBtn;
+    private Button backBtn;
 
     // Game stats
     private int score = 0;
@@ -33,11 +39,21 @@ public class GameUIController : MonoBehaviour
         healthLabel = root.Q<Label>("Health");
         heartsBar = root.Q<VisualElement>("HeartsBar");
 
+        gameOverScreen = root.Q<VisualElement>("GameOverRoot");
+        finalScoreLabel = root.Q<Label>("ScoreLabel");
+        playAgainBtn = root.Q<Button>("PlayAgainBtn");
+        backBtn = root.Q<Button>("BackBtn");
 
-        Debug.Log("HEARTS BAR LOADED: " + heartsBar);
+        //Hide game over on start
+        if (gameOverScreen != null)
+            gameOverScreen.style.display = DisplayStyle.None;
+        
+        // Hook up button clicks
+        if (playAgainBtn != null)
+            playAgainBtn.clicked += RestartGame;
 
-        Debug.Log($"Heart image loaded? {hearts3 != null}");
-        Debug.Log($"Texture size: {hearts3.texture.width}x{hearts3.texture.height}");
+        if (backBtn != null)
+            backBtn.clicked += ReturnToMenu;
 
         UpdateUI();
         SetLives(lives);
@@ -97,5 +113,25 @@ public class GameUIController : MonoBehaviour
                 heartsBar.style.backgroundImage = new StyleBackground(hearts0);
                 break;
         }
+    }
+
+    public void ShowGameOver()
+    {
+        Time.timeScale = 0f;
+
+        gameOverScreen.style.display = DisplayStyle.Flex;
+        finalScoreLabel.text = $"Score: {score}";
+    }
+
+    private void RestartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void ReturnToMenu()
+    {
+        Time.timeScale = 1f; // unpause
+        SceneManager.LoadScene("MainMenu");
     }
 }

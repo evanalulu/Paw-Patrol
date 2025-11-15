@@ -149,6 +149,7 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 0f;
             audioManager?.Play(audioManager.GameOverSound);
             audioManager.Music.Stop();
+            gameUI.ShowGameOver();
         }
     }
 }

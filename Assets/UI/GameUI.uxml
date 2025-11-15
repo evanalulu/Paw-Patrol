@@ -1,10 +1,15 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/GameUI.uss?fileID=7433441132597879392&amp;guid=2ced7637d02f244819eaaf8f24f569f2&amp;type=3#GameUI" />
     <ui:VisualElement name="root" class="GameUI" style="flex-grow: 1; top: 0; left: 0;">
-        <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1;">
-            <ui:Label text="Score: 0" name="Score" class="score-label" style="right: 100px;" />
-            <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left; top: 350px; right: 170%; position: absolute;" />
-            <ui:VisualElement name="HeartsBar" class="lives-container" style="flex-grow: 1; width: 65px; top: 350px; right: 5px;" />
+        <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1; top: auto; right: auto; align-self: flex-end; width: 45%; height: 20%;">
+            <ui:Label text="Score: 0" name="Score" class="score-label" style="right: auto; font-size: 14%;" />
+            <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left; top: auto; right: auto; position: relative; font-size: 14%;" />
+            <ui:VisualElement name="HeartsBar" class="lives-container" style="flex-grow: 1; width: 90%; top: auto; right: auto; position: relative; height: auto; font-size: 14%; flex-direction: column-reverse; align-content: auto; align-items: auto; align-self: flex-end; left: 10%;" />
         </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="GameOverRoot" style="flex-grow: 1; background-color: rgb(32, 32, 32); background-image: url(&quot;project://database/Assets/UI/GameOverScreen/gameOverBg%201.png?fileID=2800000&amp;guid=dbca8634ef70145c6b847d7ffa43f20e&amp;type=3#gameOverBg 1&quot;); align-items: center; justify-content: center;">
+        <ui:Label text="Score" name="ScoreLabel" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); font-size: 20%; color: rgb(255, 250, 250); top: 15%;" />
+        <ui:Button text="Play Again" name="PlayAgainBtn" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); color: rgb(255, 250, 250); font-size: 12%; top: 18.5%; background-color: rgba(188, 188, 188, 0);" />
+        <ui:Button text="Back" name="BackBtn" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); color: rgb(255, 250, 250); font-size: 12%; top: 19%; background-color: rgba(188, 188, 188, 0); align-self: center;" />
     </ui:VisualElement>
 </ui:UXML>
