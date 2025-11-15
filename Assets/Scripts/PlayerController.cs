@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
         {
             hitPoints--;
             gameUI?.SetHealth(hitPoints * 33); // convert 3 hits → 100/66/33/0
+            gameUI?.LoseLife();
             Debug.Log($"💥 Player hit! Remaining lives: {hitPoints}");
 
             audioManager?.Play(audioManager.CollisionSound);

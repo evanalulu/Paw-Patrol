@@ -12,7 +12,6 @@ public class GameUIController : MonoBehaviour
     // UI references
     private Label scoreLabel;
     private Label healthLabel;
-    private VisualElement livesContainer;
     private VisualElement heartsBar;
 
     // Game stats
@@ -29,9 +28,14 @@ public class GameUIController : MonoBehaviour
         // Find UI elements by name
         scoreLabel = root.Q<Label>("Score");
         healthLabel = root.Q<Label>("Health");
-        livesContainer = root.Q<VisualElement>("LivesContainer");
         heartsBar = root.Q<VisualElement>("HeartsBar");
 
+
+        Debug.Log("HEARTS BAR LOADED: " + heartsBar);
+
+        Debug.Log($"Heart image loaded? {hearts3 != null}");
+        Debug.Log($"Texture size: {hearts3.texture.width}x{hearts3.texture.height}");
+        
         UpdateUI();
         SetLives(lives);
     }

@@ -1,10 +1,10 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/GameUI.uss?fileID=7433441132597879392&amp;guid=2ced7637d02f244819eaaf8f24f569f2&amp;type=3#GameUI" />
-    <ui:VisualElement name="root" style="flex-grow: 1;">
+    <ui:VisualElement name="root" class="GameUI" style="flex-grow: 1;">
         <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1;">
             <ui:Label text="Score: 0" name="Score" class="score-label" />
             <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left;" />
-            <ui:VisualElement name="HeartsBar" class="HeartsBar" style="flex-grow: 1;" />
+            <ui:VisualElement name="HeartsBar" class="lives-container" style="flex-grow: 1; width: 65px; top: 47px; right: 5px;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
