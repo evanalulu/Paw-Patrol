@@ -33,12 +33,10 @@
 
 #HeartsBar {
     position: absolute;
-    top: 40px;
+    top: 500px;
     right: 5px;
-
     width: 150px;
     height: 30px;
-
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
