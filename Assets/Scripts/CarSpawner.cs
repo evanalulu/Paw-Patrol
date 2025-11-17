@@ -12,14 +12,47 @@ public class CarSpawner : MonoBehaviour
     public float laneCooldown = 3f;
     public float carSpawnZMin = 12f;
     public float carSpawnZMax = 15f;
-
-    private readonly float[] lanes = { -0.9f, 0f, 0.9f };
+    
+    private GameObject[] fullPrefabSet;
+    private LevelConfig config;
+    private float[] lanes;
     private float[] nextSpawnTime;
 
     void Start()
     {
+        string selected = PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel");
+
+        config = Resources.Load<LevelConfig>("Levels/" + PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel"));
+        if (config == null)
+        {
+            Debug.LogError("❌ LevelConfig missing. Using backup lane layout.");
+            lanes = new float[] { -0.9f, 0f, 0.9f };
+            fullPrefabSet = carPrefabs; 
+        }
+        else
+        {
+            lanes = config.lanePositions;
+            fullPrefabSet = CombineVehicleLists(carPrefabs, config.exclusivePrefabs);
+            spawnInterval = config.spawnInterval;
+            rescueChance = config.rescueChance;
+            carSpawnZMin = config.carSpawnMinZ;
+            carSpawnZMax = config.carSpawnMaxZ;
+        }
+
         nextSpawnTime = new float[lanes.Length];
         InvokeRepeating(nameof(SpawnCar), 1f, spawnInterval);
+    }
+
+    GameObject[] CombineVehicleLists(GameObject[] baseCars, GameObject[] extra)
+    {
+        if (extra == null || extra.Length == 0)
+            return baseCars;
+
+        GameObject[] result = new GameObject[baseCars.Length + extra.Length];
+        baseCars.CopyTo(result, 0);
+        extra.CopyTo(result, baseCars.Length);
+
+        return result;
     }
 
     void SpawnCar()
@@ -41,11 +74,17 @@ public class CarSpawner : MonoBehaviour
         if (availableLane == -1) return;
 
         // record cooldown for that lane
-        nextSpawnTime[availableLane] = currentTime + laneCooldown;
+        nextSpawnTime[availableLane] = currentTime + config.spawnInterval;
 
         // 50% chance rescue vehicle
         bool spawnRescue = (rescuePrefabs != null && rescuePrefabs.Length > 0 && Random.value < rescueChance);
         GameObject[] pool = spawnRescue ? rescuePrefabs : carPrefabs;
+
+        if (config.exclusivePrefabs != null && config.exclusivePrefabs.Length > 0)
+        {
+            System.Array.Resize(ref pool, pool.Length + config.exclusivePrefabs.Length);
+            config.exclusivePrefabs.CopyTo(pool, pool.Length - config.exclusivePrefabs.Length);
+        }
 
         // choose prefab
         int index = Random.Range(0, pool.Length);

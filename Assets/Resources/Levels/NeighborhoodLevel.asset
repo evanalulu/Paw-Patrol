@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31375d9bd27cf4ad5873a085975cf39d, type: 3}
   m_Name: NeighborhoodLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  neighborhoodBackground: {fileID: 0}
-  downtownBackground: {fileID: 0}
-  neighborhoodSpawnRate: 2
-  downtownSpawnRate: 1.2
+  lanePositions:
+  - -0.9
+  - 0
+  - 0.9
+  carSpawnMinZ: 12
+  carSpawnMaxZ: 15
+  spawnInterval: 2
+  rescueChance: 0.5
+  backgroundMaterial: {fileID: 2100000, guid: c21ce86e92d6648d4a170c7735fe4fdd, type: 2}
+  exclusivePrefabs: []

@@ -7,7 +7,13 @@ public class CarLooper : MonoBehaviour
     [SerializeField] private float despawnZ = -10f; // When to disappear
     [SerializeField] private float respawnZ = 12f;  // Where to reappear
 
-    private readonly float[] lanes = { -0.9f, 0f, 0.9f };
+    private float[] lanes;
+
+    void Start()
+    {
+        LevelConfig config = Resources.Load<LevelConfig>(PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel"));
+        lanes = config != null ? config.lanePositions : new float[] { -0.9f, 0f, 0.9f };
+    }
 
     void Update()
     {

@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
     // [Header("UI Settings")]
     private GameUIController gameUI;
 
+    private LevelConfig config;
+    private float leftLimit;
+    private float rightLimit;
+
     private Vector2 moveInput;
     private float lastFireTimePrimary = 0f;
     private float lastFireTimeSecondary = 0f;
@@ -34,8 +38,30 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>(); // cache once
+        audioManager = FindObjectOfType<AudioManager>();
         gameUI = FindObjectOfType<GameUIController>();
+
+        string selected = PlayerPrefs.GetString("SelectedLevel", "NeighborhoodLevel");
+        config = Resources.Load<LevelConfig>($"Levels/{selected}");
+
+        if (config == null)
+        {
+            Debug.LogError($"❌ PlayerController could NOT load LevelConfig for: {selected}. Using fallback.");
+            leftLimit = -0.9f;
+            rightLimit = 0.9f;
+        }
+        else
+        {
+            // Use lane positions to determine movement boundaries
+            float minLane = Mathf.Min(config.lanePositions);
+            float maxLane = Mathf.Max(config.lanePositions);
+
+            // Add small padding so player doesn't sit on lane edge
+            leftLimit = minLane - 0.2f;
+            rightLimit = maxLane + 0.2f;
+
+            Debug.Log($"🎮 Movement bounds updated → {leftLimit} to {rightLimit}");
+        }
     }
 
     void OnEnable()
@@ -74,8 +100,6 @@ public class PlayerController : MonoBehaviour
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y) * maneuveringSpeed * Time.deltaTime;
         transform.position += move;
 
-        float leftLimit = -0.9f;
-        float rightLimit = 0.9f;
         float bottomLimit = -6f;
         float topLimit = -3f;
 
@@ -119,9 +143,13 @@ public class PlayerController : MonoBehaviour
     // Collision detection — lose a life if hit by a car
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.collider.CompareTag("Enemy")) return;
+        if (!collision.collider.CompareTag("Enemy") && !collision.collider.CompareTag("FireTruck")) 
+            return;
 
-        int newHealth = gameUI.Health - 34;
+        int newHealth = 0;
+        if (collision.collider.CompareTag("Enemy")) { newHealth = gameUI.Health - 34; }
+        if (collision.collider.CompareTag("Firetruck")) { newHealth = 0; }
+
         gameUI.SetHealth(newHealth);
 
         audioManager?.Play(audioManager.CollisionSound);
@@ -133,7 +161,6 @@ public class PlayerController : MonoBehaviour
             Destroy(fx, 0.417f);
         }
 
-        
         // Check if health depleted
         if (gameUI.Health <= 0)
         {
