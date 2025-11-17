@@ -7,9 +7,9 @@ public class RescueTarget : MonoBehaviour
 
     public void TakeHit(string projectileType)
     {
-        hitCount += (projectileType == "Bone") ? 2 : 1;
+        hitCount += (projectileType == "Bone") ? 3 : 1;
 
-        if (hitCount >= 2) // 2 Ball hits or 1 Bone hit
+        if (hitCount >= 3) // 3 Ball hits or 1 Bone hit
         {
             Debug.Log("🐾 Pet rescued!");
             if (rescueEffect != null)

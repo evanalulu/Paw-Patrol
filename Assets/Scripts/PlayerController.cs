@@ -209,17 +209,30 @@ public class TreatMover : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         Debug.Log($"Bullet hit: {collision.collider.name}");
+
+        // Mega rescue
+        MegaRescueTarget mega = collision.collider.GetComponent<MegaRescueTarget>();
+        if (mega != null)
+        {
+            mega.TakeHit(type);
+            Destroy(gameObject);
+            audioManager?.Play(audioManager.PetCollectSound);
+            audioManager?.PlayRandomPetSound();
+            Debug.Log($"🚌 Hit mega rescue with {type}");
+            return;
+        }
+
+        // Normal rescue
         if (collision.collider.CompareTag("Rescue"))
         {
             gameUI?.AddScore(10);
             RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
-            Debug.Log("Rescue target hit!");
             rescue.TakeHit(type);
-
             audioManager?.Play(audioManager.PetCollectSound);
             audioManager?.PlayRandomPetSound();
+            
         }
-
+        
         Destroy(gameObject);
     }
 }

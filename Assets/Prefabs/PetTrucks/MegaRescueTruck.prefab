@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -5371868594560737008}
   - component: {fileID: -1334934433216103971}
   - component: {fileID: -8318959300692178806}
-  - component: {fileID: 6424321299402093679}
+  - component: {fileID: 6240873364720975738}
   m_Layer: 0
   m_Name: MegaRescueTruck
   m_TagString: Rescue
@@ -160,7 +160,7 @@ MonoBehaviour:
   minCarSpacing: 3
   maxRespawnZ: 15
   currentLaneIndex: 0
---- !u!114 &6424321299402093679
+--- !u!114 &6240873364720975738
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,7 +169,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2852563609930900892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f79f0cf5565244929b4c6b0f9bbb76a, type: 3}
+  m_Script: {fileID: 11500000, guid: 70e8d1c6ac0d4474eb7c1bff32cf8541, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RescueTarget
+  m_EditorClassIdentifier: Assembly-CSharp::MegaRescueTarget
+  ballHitsRequired: 5
+  boneValue: 3
+  rescueScore: 50
   rescueEffect: {fileID: 7343611469452644108, guid: 110207c6e66554989a6bf8a1078975b1, type: 3}
