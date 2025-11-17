@@ -290,7 +290,7 @@ AudioSource:
   m_GameObject: {fileID: 48231408}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1137485740457309244, guid: a8a33cabc45464c23b915182a4eb1947, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -702,7 +702,7 @@ AudioSource:
   m_GameObject: {fileID: 463609683}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 5642341891607655957, guid: a8a33cabc45464c23b915182a4eb1947, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -987,6 +987,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0e8112629174f17ba49df73fb5499f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
+  levelSelectSceneName: LevelSelect
+  audioMixer: {fileID: 24100000, guid: a8a33cabc45464c23b915182a4eb1947, type: 2}
+  normalBackground: {fileID: 2800000, guid: c5fcac6ddaa4a44f89d88ae2516b2c76, type: 3}
+  blurredBackground: {fileID: 2800000, guid: ae490c148380649c79ab655862c5b3af, type: 3}
 --- !u!1 &830906162
 GameObject:
   m_ObjectHideFlags: 0

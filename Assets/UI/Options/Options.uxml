@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="OptionsPanel" style="flex-grow: 1;">
+        <ui:Slider label="Master" value="42" high-value="100" name="MasterSlider" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); color: rgb(255, 255, 255);" />
+        <ui:Slider label="Music" value="42" high-value="100" name="MusicSlider" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); color: rgb(255, 255, 255); height: 28px;" />
+        <ui:Slider label="SFX" value="42" high-value="100" name="SFXSlider" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=bab3f59de22004940bfd748151f08956&amp;type=3#PressStart2P-Regular&quot;); color: rgb(255, 255, 255); height: 28px;" />
+    </ui:VisualElement>
+</ui:UXML>
