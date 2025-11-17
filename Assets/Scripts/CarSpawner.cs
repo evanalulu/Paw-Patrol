@@ -80,13 +80,23 @@ public class CarSpawner : MonoBehaviour
         int availableLane = availableLanes[Random.Range(0, availableLanes.Count)];
 
         // Step 2: vehicle pool
-        bool spawnRescue = rescuePrefabs != null && rescuePrefabs.Length > 0 && Random.value < rescueChance;
-        GameObject[] pool = spawnRescue ? rescuePrefabs : fullPrefabSet;
+        GameObject selectedPrefab;
+        bool spawnMega = config.exclusivePrefabs != null 
+                        && config.exclusivePrefabs.Length > 0
+                        && Random.value < config.megaSpawnChance;
 
+        if (spawnMega)
+        {
+            selectedPrefab = config.exclusivePrefabs[Random.Range(0, config.exclusivePrefabs.Length)];
+            Debug.Log("🚌 Mega Rescue Spawned!");
+        } else 
+        {
+          bool spawnRescue = rescuePrefabs != null && rescuePrefabs.Length > 0 && Random.value < rescueChance;
+          GameObject[] pool = spawnRescue ? rescuePrefabs : fullPrefabSet;
+          selectedPrefab = pool[Random.Range(0, pool.Length)];
+        }
         // Step 3: choose prefab & lane
-        int index = Random.Range(0, pool.Length);
         float laneX = lanes[availableLane];
-        
         // Try different spawn positions until we find one without collision
         float spawnZ = FindSafeSpawnPosition(laneX, availableLane);
         
@@ -100,7 +110,7 @@ public class CarSpawner : MonoBehaviour
         Vector3 spawnPos = new(laneX, 0.16f, spawnZ);
         Quaternion spawnRot = Quaternion.Euler(90f, 180f, 0f);
 
-        GameObject spawnedCar = Instantiate(pool[index], spawnPos, spawnRot);
+        GameObject spawnedCar = Instantiate(selectedPrefab, spawnPos, spawnRot);
 
         // Step 4: tell CarLooper which lane it's in
         CarLooper looper = spawnedCar.GetComponent<CarLooper>();

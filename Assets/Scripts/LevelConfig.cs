@@ -15,4 +15,7 @@ public class LevelConfig : ScriptableObject
 
     [Header("Special Vehicles (Spawn Only in This Level)")]
     public GameObject[] exclusivePrefabs;
+
+    [Range(0f, 1f)]
+    public float megaSpawnChance = 0.15f;
 }
