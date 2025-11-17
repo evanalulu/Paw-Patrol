@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: DowntownLevel
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
   lanePositions:
-  - -1.4
+  - -1.3
   - -0.45
   - 0.45
-  - 1.4
+  - 1.3
   carSpawnMinZ: 12
   carSpawnMaxZ: 15
   spawnInterval: 1.3
