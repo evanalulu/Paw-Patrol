@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -8098423592351076575}
   - component: {fileID: 1891178028503128394}
   - component: {fileID: 7459766842790128207}
+  - component: {fileID: 419862874162857097}
   m_Layer: 0
   m_Name: Green Car
   m_TagString: Enemy
@@ -108,6 +109,7 @@ MonoBehaviour:
   speed: 2
   despawnZ: -10
   respawnZ: 12
+  currentLaneIndex: 0
 --- !u!54 &1891178028503128394
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,7 +133,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -156,3 +158,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.46000022, y: 0.8900003, z: 0.20000026}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &419862874162857097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7118434211489919042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591b20d9cac58489dbe2b8c95a2b9b74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PullOverCar
+  laneShiftSpeed: 3

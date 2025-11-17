@@ -56,44 +56,45 @@ public class CarSpawner : MonoBehaviour
     }
 
     void SpawnCar()
-    {
-        float currentTime = Time.time;
+  {
+      float currentTime = Time.time;
 
-        // find lanes that are ready
-        int availableLane = -1;
-        for (int i = 0; i < lanes.Length; i++)
-        {
-            if (currentTime >= nextSpawnTime[i])
-            {
-                availableLane = i;
-                break;
-            }
-        }
+      // Step 1: find all available lanes
+      System.Collections.Generic.List<int> availableLanes = new System.Collections.Generic.List<int>();
+      for (int i = 0; i < lanes.Length; i++)
+      {
+          if (currentTime >= nextSpawnTime[i])
+          {
+              availableLanes.Add(i);
+          }
+      }
 
-        // no lanes free
-        if (availableLane == -1) return;
+      // If no lanes are available, return
+      if (availableLanes.Count == 0) return;
+      
+      // Randomly select one of the available lanes
+      int availableLane = availableLanes[Random.Range(0, availableLanes.Count)];
 
-        // record cooldown for that lane
-        nextSpawnTime[availableLane] = currentTime + config.spawnInterval;
+      // Step 2: vehicle pool
+      bool spawnRescue = rescuePrefabs != null && rescuePrefabs.Length > 0 && Random.value < rescueChance;
+      GameObject[] pool = spawnRescue ? rescuePrefabs : fullPrefabSet;
 
-        // 50% chance rescue vehicle
-        bool spawnRescue = (rescuePrefabs != null && rescuePrefabs.Length > 0 && Random.value < rescueChance);
-        GameObject[] pool = spawnRescue ? rescuePrefabs : carPrefabs;
+      // Step 3: choose prefab & lane
+      int index = Random.Range(0, pool.Length);
+      float laneX = lanes[availableLane];
+      float spawnZ = Random.Range(carSpawnZMin, carSpawnZMax);
 
-        if (config.exclusivePrefabs != null && config.exclusivePrefabs.Length > 0)
-        {
-            System.Array.Resize(ref pool, pool.Length + config.exclusivePrefabs.Length);
-            config.exclusivePrefabs.CopyTo(pool, pool.Length - config.exclusivePrefabs.Length);
-        }
+      Vector3 spawnPos = new(laneX, 0.16f, spawnZ);
+      Quaternion spawnRot = Quaternion.Euler(90f, 180f, 0f);
 
-        // choose prefab
-        int index = Random.Range(0, pool.Length);
-        float laneX = lanes[availableLane];
-        float spawnZ = Random.Range(carSpawnZMin, carSpawnZMax);
+      GameObject spawnedCar = Instantiate(pool[index], spawnPos, spawnRot);
 
-        Vector3 spawnPos = new Vector3(laneX, 0.16f, spawnZ);
-        Quaternion spawnRot = Quaternion.Euler(90f, 180f, 0f);
+      // Step 4: tell CarLooper which lane it's in
+      CarLooper looper = spawnedCar.GetComponent<CarLooper>();
+      if (looper != null)
+          looper.currentLaneIndex = availableLane;
 
-        Instantiate(pool[index], spawnPos, spawnRot);
-    }
+      // Step 5: next cooldown
+      nextSpawnTime[availableLane] = currentTime + config.spawnInterval;
+  }
 }

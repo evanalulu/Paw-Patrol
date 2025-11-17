@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -2360147630685827075}
   - component: {fileID: 6921194389141699448}
   - component: {fileID: 7488709113358375549}
+  - component: {fileID: -7384207296698432783}
   m_Layer: 0
   m_Name: Orange Car
   m_TagString: Enemy
@@ -108,6 +109,7 @@ MonoBehaviour:
   speed: 2
   despawnZ: -10
   respawnZ: 12
+  currentLaneIndex: 0
 --- !u!54 &6921194389141699448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -131,7 +133,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
@@ -156,3 +158,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.46000022, y: 0.79000026, z: 0.20000024}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-7384207296698432783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5947773728299764360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591b20d9cac58489dbe2b8c95a2b9b74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PullOverCar
+  laneShiftSpeed: 3
