@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Clips")]
     public AudioClip BackgroundMusic;
+    public AudioClip LobbyMusic;
     public AudioClip AttackSound;
     public AudioClip CollisionSound;
     public AudioClip PetCollectSound;
@@ -30,13 +32,31 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        // background music
-        if (Music != null && BackgroundMusic != null)
+        UpdateMusicForScene(SceneManager.GetActiveScene().name);
+
+        SceneManager.activeSceneChanged += (_, newScene) =>
         {
-            Music.clip = BackgroundMusic;
-            Music.loop = true;
-            Music.Play();
-        }
+            UpdateMusicForScene(newScene.name);
+        };
+    }
+
+    private void UpdateMusicForScene(string sceneName)
+    {
+        if (sceneName.Contains("NeighborhoodStreet"))
+            PlayMusic(BackgroundMusic);
+        else
+            PlayMusic(LobbyMusic);
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        if (clip == null || Music == null) return;
+
+        if (Music.clip == clip) return; // already playing → do nothing
+
+        Music.clip = clip;
+        Music.loop = true;
+        Music.Play();
     }
 
     public void Play(AudioClip clip)
