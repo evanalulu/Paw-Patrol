@@ -1446,6 +1446,7 @@ MonoBehaviour:
   Music: {fileID: 48231410}
   SoundFX: {fileID: 463609685}
   BackgroundMusic: {fileID: 8300000, guid: e5b2c10cb88cc475f912cc4bebbb06a1, type: 3}
+  LobbyMusic: {fileID: 8300000, guid: 7d6d41cd8aa1c4e7fbeaade3b6a6056a, type: 3}
   AttackSound: {fileID: 8300000, guid: 833ed34ac5d724645b1b192b6791493e, type: 3}
   CollisionSound: {fileID: 8300000, guid: b24c23253cb0a4aa99c6cdf76058bb25, type: 3}
   PetCollectSound: {fileID: 8300000, guid: 653405fd6027f44eda5c661888c4e5ff, type: 3}
