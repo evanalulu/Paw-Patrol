@@ -988,6 +988,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuManager
   levelSelectSceneName: LevelSelect
+  audioMixer: {fileID: 24100000, guid: a8a33cabc45464c23b915182a4eb1947, type: 2}
+  normalBackground: {fileID: 2800000, guid: a074029112caf4f7296b6c12ccad1a2f, type: 3}
+  blurredBackground: {fileID: 2800000, guid: dbca8634ef70145c6b847d7ffa43f20e, type: 3}
 --- !u!1 &830906162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1459,7 @@ MonoBehaviour:
   Music: {fileID: 48231410}
   SoundFX: {fileID: 463609685}
   BackgroundMusic: {fileID: 8300000, guid: e5b2c10cb88cc475f912cc4bebbb06a1, type: 3}
+  LobbyMusic: {fileID: 0}
   AttackSound: {fileID: 8300000, guid: 833ed34ac5d724645b1b192b6791493e, type: 3}
   CollisionSound: {fileID: 8300000, guid: b24c23253cb0a4aa99c6cdf76058bb25, type: 3}
   PetCollectSound: {fileID: 8300000, guid: 653405fd6027f44eda5c661888c4e5ff, type: 3}

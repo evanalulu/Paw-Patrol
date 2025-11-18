@@ -29,6 +29,6 @@ public class LevelSelectManager : MonoBehaviour
     {
         PlayerPrefs.SetString("SelectedLevel", configName);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("NeighborhoodStreet");
+        SceneManager.LoadScene("Backstory");
     }
 }
