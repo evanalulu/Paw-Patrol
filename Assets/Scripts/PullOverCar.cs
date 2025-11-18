@@ -15,6 +15,13 @@ public class PullOverCar : MonoBehaviour
         looper = GetComponent<CarLooper>();
         rb = GetComponent<Rigidbody>();
         config = Resources.Load<LevelConfig>(PlayerPrefs.GetString("SelectedLevel"));
+        
+        // Ensure firetruck has the correct tag for player collision
+        if (gameObject.name.Contains("Firetruck") && !CompareTag("Firetruck"))
+        {
+            gameObject.tag = "Firetruck";
+            Debug.Log($"🚒 Set tag to 'Firetruck' for {gameObject.name}");
+        }
     }
 
     public void PullOver()
@@ -26,6 +33,13 @@ public class PullOverCar : MonoBehaviour
     IEnumerator PullOverRoutine()
     {
         isPullingOver = true;
+
+        // Disable collider during lane change to prevent unwanted collisions
+        Collider carCollider = GetComponent<Collider>();
+        if (carCollider != null)
+        {
+            carCollider.enabled = false;
+        }
 
         // Pick nearest free lane (left or right)
         int newLane = looper.currentLaneIndex;
@@ -44,6 +58,29 @@ public class PullOverCar : MonoBehaviour
             yield return null;
         }
 
+        // Re-enable collider after lane change is complete
+        if (carCollider != null)
+        {
+            carCollider.enabled = true;
+            Debug.Log($"🚒 Firetruck collider re-enabled after pull-over");
+        }
+
         isPullingOver = false;
+        
+        // Double-check that collider is enabled after a short delay
+        StartCoroutine(VerifyColliderEnabled());
+    }
+    
+    IEnumerator VerifyColliderEnabled()
+    {
+        // Wait a short time to ensure everything has settled
+        yield return new WaitForSeconds(0.5f);
+        
+        Collider carCollider = GetComponent<Collider>();
+        if (carCollider != null && !carCollider.enabled)
+        {
+            carCollider.enabled = true;
+            Debug.Log($"🚒 Firetruck collider re-enabled during verification check");
+        }
     }
 }
