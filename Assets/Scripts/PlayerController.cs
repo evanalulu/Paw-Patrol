@@ -143,12 +143,14 @@ public class PlayerController : MonoBehaviour
     // Collision detection — lose a life if hit by a car
     void OnCollisionEnter(Collision collision)
     {
-        if (!collision.collider.CompareTag("Enemy") && !collision.collider.CompareTag("Firetruck")) 
+        if (!collision.collider.CompareTag("Enemy") && !collision.collider.CompareTag("Firetruck") &&
+            !collision.collider.CompareTag("Rescue"))
             return;
 
         int newHealth = gameUI.Health; // start with current health
 
         if (collision.collider.CompareTag("Enemy")) { newHealth -= 34; }
+        else if (collision.collider.CompareTag("Rescue")) { newHealth -= 34;}
         else if (collision.collider.CompareTag("Firetruck")) { newHealth = 0;}
 
         gameUI.SetHealth(newHealth);
