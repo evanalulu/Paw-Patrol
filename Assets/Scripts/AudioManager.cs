@@ -64,6 +64,13 @@ public class AudioManager : MonoBehaviour
         if (clip != null && SoundFX != null)
             SoundFX.PlayOneShot(clip);
     }
+    
+    // Play pet collect sound at a higher volume
+    public void PlayPetCollectSound()
+    {
+        if (PetCollectSound != null && SoundFX != null)
+            SoundFX.PlayOneShot(PetCollectSound, 1.5f); // Increased volume (1.0f is normal)
+    }
 
     // Randomly play Woof or Meow.
     public void PlayRandomPetSound()

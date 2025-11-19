@@ -218,7 +218,6 @@ public class TreatMover : MonoBehaviour
         {
             mega.TakeHit(type);
             Destroy(gameObject);
-            audioManager?.Play(audioManager.PetCollectSound);
             audioManager?.PlayRandomPetSound();
             Debug.Log($"🚌 Hit mega rescue with {type}");
             return;
@@ -230,7 +229,6 @@ public class TreatMover : MonoBehaviour
             gameUI?.AddScore(10);
             RescueTarget rescue = collision.collider.GetComponent<RescueTarget>();
             rescue.TakeHit(type);
-            audioManager?.Play(audioManager.PetCollectSound);
             audioManager?.PlayRandomPetSound();
             
         }

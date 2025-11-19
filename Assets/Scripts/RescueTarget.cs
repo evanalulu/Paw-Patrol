@@ -18,6 +18,10 @@ public class RescueTarget : MonoBehaviour
                 fx.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
                 Destroy(fx, 0.417f);
             }
+            
+            // Play pet collect sound at higher volume only when pet is actually rescued
+            AudioManager audioManager = FindObjectOfType<AudioManager>();
+            audioManager?.PlayPetCollectSound();
 
             Destroy(gameObject, 0.3f);
         }
