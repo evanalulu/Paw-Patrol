@@ -51,6 +51,9 @@ public class PauseOptions : MonoBehaviour
         masterSlider.RegisterValueChangedCallback(x => SaveSetting(x, MASTER_KEY, "Master"));
         musicSlider.RegisterValueChangedCallback(x => SaveSetting(x, MUSIC_KEY, "Music"));
         sfxSlider.RegisterValueChangedCallback(x => SaveSetting(x, SFX_KEY, "SFX"));
+        
+        // Add sound effects to buttons
+        UIButtonSoundHandler.AddSoundEffectsToButtons(pauseButton, exitButton);
     }
 
     void ToggleOptions()

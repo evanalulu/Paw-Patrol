@@ -23,6 +23,9 @@ public class LevelSelectManager : MonoBehaviour
 
         if (downtownButton != null)
             downtownButton.clicked += () => SelectLevel("DowntownLevel");
+            
+        // Add sound effects to buttons
+        UIButtonSoundHandler.AddSoundEffectsToButtons(neighborhoodButton, downtownButton);
     }
 
     public void SelectLevel(string configName)

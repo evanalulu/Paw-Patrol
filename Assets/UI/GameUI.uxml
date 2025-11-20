@@ -1,9 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/GameUI.uss?fileID=7433441132597879392&amp;guid=2ced7637d02f244819eaaf8f24f569f2&amp;type=3#GameUI" />
-    <ui:VisualElement name="root" class="GameUI" style="flex-grow: 1; top: 0; left: 0; -unity-background-image-tint-color: rgba(255, 255, 255, 0);">
-        <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1; top: auto; right: auto; align-self: flex-end; width: 45%; height: 20%;">
-            <ui:Label text="Score: 0" name="Score" class="score-label" style="right: auto; font-size: 14%;" />
-            <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left; top: auto; right: auto; position: relative; font-size: 14%;" />
+    <ui:VisualElement name="root" class="GameUI" style="flex-grow: 1; top: 0; left: 0; -unity-background-image-tint-color: rgba(255, 255, 255, 0); position: relative;">
+        <ui:VisualElement name="topRightGroup" class="top-right" style="flex-grow: 1; top: auto; right: auto; align-self: flex-end; width: 45%; height: auto; position: relative; max-height: 25%;">
+            <ui:Label text="Score: 0" name="Score" class="score-label" style="right: auto; font-size: 14%; align-self: flex-end;" />
+            <ui:Label text="Health: 100" name="Health" class="health-label" style="-unity-text-align: upper-left; top: auto; right: auto; position: relative; font-size: 12%; align-self: flex-end; -unity-font-style: normal;" />
             <ui:VisualElement name="HeartsBar" class="lives-container" style="flex-grow: 1; width: 90%; top: auto; right: auto; position: relative; height: auto; font-size: 14%; flex-direction: column-reverse; align-content: auto; align-items: auto; align-self: flex-end; left: 10%;" />
         </ui:VisualElement>
         <ui:Button name="PauseBtn" style="background-image: url(&quot;project://database/Assets/UI/pauseBtn.png?fileID=2800000&amp;guid=05a4f62fcfa804066b434c8b9b71a164&amp;type=3#pauseBtn&quot;); width: 0%; bottom: auto; top: 93%; align-self: flex-start; visibility: visible;" />

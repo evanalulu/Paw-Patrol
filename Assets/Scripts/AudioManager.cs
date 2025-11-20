@@ -17,7 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip PetCollectSound;
     public AudioClip WoofSound;
     public AudioClip MeowSound;
-		public AudioClip GameOverSound;
+    public AudioClip GameOverSound;
+    public AudioClip RolloverSound;
+    public AudioClip ClickSound;
 
     void Awake()
     {
@@ -70,6 +72,25 @@ public class AudioManager : MonoBehaviour
     {
         if (PetCollectSound != null && SoundFX != null)
             SoundFX.PlayOneShot(PetCollectSound, 1.5f); // Increased volume (1.0f is normal)
+    }
+
+    // Play button rollover sound
+    public void PlayRolloverSound()
+    {
+        if (RolloverSound != null && SoundFX != null)
+            SoundFX.PlayOneShot(RolloverSound, 1.5f); // Increased volume from 0.8f to 1.5f
+    }
+
+    // Play button click sound
+    public void PlayClickSound()
+    {
+        if (ClickSound != null && SoundFX != null)
+        {
+            // Stop any currently playing sounds to ensure click is heard clearly
+            SoundFX.Stop();
+            // Play at much higher volume (2.5x)
+            SoundFX.PlayOneShot(ClickSound, 2.5f);
+        }
     }
 
     // Randomly play Woof or Meow.

@@ -63,6 +63,9 @@ public class MenuManager : MonoBehaviour
         masterSlider.RegisterValueChangedCallback(evt => SaveVolume(evt, MASTER_KEY, "Master"));
         musicSlider.RegisterValueChangedCallback(evt => SaveVolume(evt, MUSIC_KEY, "Music"));
         sfxSlider.RegisterValueChangedCallback(evt => SaveVolume(evt, SFX_KEY, "SFX"));
+        
+        // Add sound effects to all buttons
+        UIButtonSoundHandler.AddSoundEffectsToButtons(playButton, optionsButton, exitOptionsButton);
 
         // Background
         if (normalBackground == null)

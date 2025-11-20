@@ -26,6 +26,9 @@ public class BackstoryManager : MonoBehaviour
         nextButton = root.Q<Button>("NextBtn");
 
         nextButton.clicked += OnNext;
+        
+        // Add sound effects to button
+        UIButtonSoundHandler.AddSoundEffects(nextButton);
 
         if (selectedLevel == "NeighborhoodLevel")
             ShowNeighborhood(0);
